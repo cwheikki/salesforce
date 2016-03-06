@@ -1,14 +1,12 @@
-
 /**
 * Given an object type, print out a list of all of the fields for
 * that specific object
 *
+* @param type Type of object to use
 */
-String[] types = new String[]{'Contact'};
+public static String getObjectFields(String type) {
 
-Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
-
-for(Schema.DescribeSobjectResult res : results) {
+    Schema.DescribeSobjectResult results = Schema.describeSObject(type);
 
     Schema.ChildRelationship[] rels = res.getChildRelationships();
     // Use rels if needed
@@ -19,6 +17,21 @@ for(Schema.DescribeSobjectResult res : results) {
         resultString += '\n' + result + ',';
     }
 
-    system.debug('## Query Fields Result: ');
-    system.debug(resultString);
+    return resultString;
+}
+
+/**
+* Given a string array of object types, return a string
+* containing all of the fields for each object individually
+*
+* @param types String array containing object types
+*/
+public static String getMultipleObjectFields(String[] types) {
+    String resultString = '';
+
+    for (String type : types) {
+        result += '\n' + getObjectFields(type)
+    }
+
+    return resultString;
 }
