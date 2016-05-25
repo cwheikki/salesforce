@@ -6,17 +6,21 @@
 */
 public static String getObjectFields(String type) {
 
-    Schema.DescribeSobjectResult results = Schema.describeSObject(type);
-
-    Schema.ChildRelationship[] rels = res.getChildRelationships();
-    // Use rels if needed
+    List<String> types = new List<String> {type};
+    
+    List<Schema.DescribeSobjectResult> results = Schema.describeSObjects(types);
 
     String resultString = 'SELECT \n';
-    for (String key : res.fields.getMap().keySet()) {
-        String result = res.fields.getMap().get(key).getDescribe().getName();
-        resultString += '\n' + result + ',';
-    }
+    for (Schema.DescribeSobjectResult res : results) {
+        Schema.ChildRelationship[] rels = res.getChildRelationships();
+        // Use rels if needed
+    
 
+        for (String key : res.fields.getMap().keySet()) {
+            String result = res.fields.getMap().get(key).getDescribe().getName();
+            resultString += '\n' + result + ',';
+        }
+    }
     return resultString;
 }
 
