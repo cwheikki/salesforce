@@ -12,10 +12,10 @@ public static String getObjectFields(String type) {
 
     String resultString = 'SELECT \n';
     for (Schema.DescribeSobjectResult res : results) {
-        Schema.ChildRelationship[] rels = res.getChildRelationships();
-        // Use rels if needed
     
-
+        // Use rels if needed
+        Schema.ChildRelationship[] rels = res.getChildRelationships();
+    
         for (String key : res.fields.getMap().keySet()) {
             String result = res.fields.getMap().get(key).getDescribe().getName();
             resultString += '\n' + result + ',';
